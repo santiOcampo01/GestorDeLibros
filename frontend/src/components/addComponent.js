@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/addComponent.css'
 
 export default function AddComponent() {
-
+  const [successMessage, setSuccessMessage] = useState('')
   const [addBook, setAddBook] = useState({
     titulo: '',
     imagen: '',
@@ -12,7 +12,6 @@ export default function AddComponent() {
     fechaLanzamiento: '',
     genero: '',
   })
-
 
   const navigate = useNavigate()
   const volver = () => {
@@ -28,6 +27,9 @@ export default function AddComponent() {
     try {
       const response = await axios.post('http://localhost:8080/api/books/create', addBook)
       console.log(response)
+      if (response.status === 200) {
+        setSuccessMessage('Libro editado exitosamente')
+      }
     } catch (error) {
       console.error('Error al añadir el libro:', error)
     }
@@ -39,6 +41,7 @@ export default function AddComponent() {
       <form>
         {
           <div>
+            {successMessage && <p className="success-message">{successMessage}</p>}
             <label htmlFor="titulo">
               <h2> Titulo: {addBook.titulo}</h2>
             </label>

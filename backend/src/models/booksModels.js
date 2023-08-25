@@ -1,6 +1,5 @@
 const { DataTypes } = require('sequelize')
-const  db = require('../database/db') // Ruta al archivo de configuración de Sequelize
-
+const  db = require('../database/db') 
 const Book = db.define('book', {
   id: {
     type: DataTypes.INTEGER,
@@ -27,7 +26,7 @@ const Book = db.define('book', {
   },
 },
  {
-  timestamps: false, // Desactivar las columnas createdAt y updatedAt
+  timestamps: false, 
 });
 
-module.exports = Book // Exporta el modelo
+module.exports = Book 

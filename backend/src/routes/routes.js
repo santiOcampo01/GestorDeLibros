@@ -23,11 +23,11 @@ const router = Router()
  *                 genero: "Género 1"
  *                 imagen: "URL de la imagen"
  */
-//ENdpoint para obtener todos los libros
-router.get('/', async (req, res) => { // Ruta para obtener todos los libros
+
+router.get('/', async (req, res) => { 
   try {
     const getBooks = await Book.findAll({
-      attributes: ['id', 'titulo', 'autor', 'fechaLanzamiento', 'genero', 'imagen'], // Especifica las columnas que deseas seleccionar
+      attributes: ['id', 'titulo', 'autor', 'fechaLanzamiento', 'genero', 'imagen'], 
     })
 
     res.json(getBooks)
@@ -65,30 +65,23 @@ router.get('/', async (req, res) => { // Ruta para obtener todos los libros
  *               imagen: "URL de la imagen"
  */
 router.get('/:id', async (req, res) => {
-  // Ruta para obtener todos los libros
-  if(!req.params.id) return res.status(400).json({ message: 'No se proporcionó un ID' })
-  else {
-   getId = await Book.findOne({
-    where: {
-      id: req.params.id,
-    },
-  })
-  if (getId) {
-    try {
-      const getBooks = await Book.findOne({
-        where: {
-          id: req.params.id,
-        },
-        attributes: ['id', 'titulo', 'autor', 'fechaLanzamiento', 'genero', 'imagen'], // Especifica las columnas que deseas seleccionar
-      })
-      res.status(200).json({ message: 'Libro obtenido exitosamente' })
-    } catch (err) {
-      res.json({ message: err })
-    }
-  } else res.status(404).json({ message: 'Libro no encontrado' })
-} 
-})
+  try {
+    const book = await Book.findOne({
+      where: {
+        id: req.params.id,
+      },
+      attributes: ['id', 'titulo', 'autor', 'fechaLanzamiento', 'genero', 'imagen'],
+    });
 
+    if (book) {
+      res.status(200).json(book); // Devuelve el libro como respuesta
+    } else {
+      res.status(404).json({ message: 'Libro no encontrado' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 const createBookValidation = [
   body('titulo').notEmpty(),
@@ -149,7 +142,7 @@ router.post('/create', createBookValidation, async (req, res) => {
         imagen,
       })
 
-      res.json(newBook)
+      res.status(200).json(newBook)
     } catch (err) {
       res.status(500).json({ message: err.message })
     }
@@ -228,7 +221,7 @@ router.put('/update/:id', updateBookValidation, async (req, res) => {
         return res.status(404).json({ message: 'Libro no encontrado' })
       }
 
-      await Book.update(
+     const bookUpdate = await Book.update(
         {
           titulo,
           autor,
@@ -243,7 +236,7 @@ router.put('/update/:id', updateBookValidation, async (req, res) => {
         },
         )
 
-      res.status(200).json({ message: 'Libro actualizado exitosamente' })
+      res.status(200).json(bookUpdate)
     } catch (err) {
       res.status(500).json({ message: err.message })
     }
@@ -275,7 +268,8 @@ router.put('/update/:id', updateBookValidation, async (req, res) => {
  */
 router.delete('/delete/:id', async (req, res) => {
   const id = req.params.id
-  if(!id) return res.status(400).json({ message: 'No se proporcionó un ID' })
+  if(!id) {return res.status(400).json({ message: 'No se proporciono un ID' })}
+
   else {
   try {
           const existingBook = await Book.findOne({
@@ -297,7 +291,7 @@ router.delete('/delete/:id', async (req, res) => {
     res.status(200).json({ message: 'Libro eliminado exitosamente' })
   }
 }   catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(404).json({ message: err.message })
    }
 
 }

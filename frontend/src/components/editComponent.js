@@ -6,40 +6,44 @@ import '../styles/editComponent.css'
 
 
 export default function EditComponent() {
-  const { id } = useParams() // Obtiene el parámetro de la URL
-    const [book, setBook] = useState({
-      titulo: '',
-      imagen: '',
-      autor: '',
-      fechaLanzamiento: '',
-      genero: '',
-    })
-    useEffect(() => {
-        getBook()
-    }, []);
+  const [successMessage, setSuccessMessage] = useState('') 
+  const { id } = useParams()
+  const [book, setBook] = useState({
+    titulo: '',
+    imagen: '',
+    autor: '',
+    fechaLanzamiento: '',
+    genero: '',
+  })
+  useEffect(() => {
+    getBook()
+  }, [])
 
-    const navigate =  useNavigate()
-    const volver = () => {
-        navigate('/')
-    }
+  const navigate = useNavigate()
+  const volver = () => {
+    navigate('/')
+  }
 
-    const getBook = async () => { //se hace la peticion para todos los usuarios
-        const response = await axios.get('http://localhost:8080/api/books/' + id)
-        setBook(response.data)
-    }
-    const handleInputChange = event => {
-      const { name, value } = event.target
-      setBook({ ...book, [name]: value })
-    }
+  const getBook = async () => {
+    const response = await axios.get('http://localhost:8080/api/books/' + id)
+    setBook(response.data)
+  }
+  const handleInputChange = event => {
+    const { name, value } = event.target
+    setBook({ ...book, [name]: value })
+  }
 
-    const editar = async (id) => {
-        try {
-            const response = await axios.put('http://localhost:8080/api/books/update/' + id, book);
-            console.log(response);
-        } catch (error) {
-            console.error('Error al editar el libro:', error);
-        }
-    };
+  const editar = async id => {
+    try {
+      const response = await axios.put('http://localhost:8080/api/books/update/' + id, book)
+      console.log(response.status)
+            if (response.status === 200) {
+              setSuccessMessage('Libro editado exitosamente') 
+            }
+    } catch (error) {
+      console.error('Error al editar el libro:', error)
+    }
+  }
 
   return (
     <div className="divEdit">
@@ -47,6 +51,7 @@ export default function EditComponent() {
       <form>
         {
           <div key={id}>
+            {successMessage && <p className="success-message">{successMessage}</p>}
             <label htmlFor="titulo">
               <h2> Titulo: {book.titulo}</h2>
             </label>

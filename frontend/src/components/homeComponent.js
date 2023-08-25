@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import '../styles/homeStyles.css'
 
 const URI = 'http://localhost:8080/api/books/'
-// const URIEdit = 'http://localhost:8080/api/books/update/'
 const URIDelete = 'http://localhost:8080/api/books/delete/'
 export default function HomeComponent() {
   const [books, setBooks] = useState([])
