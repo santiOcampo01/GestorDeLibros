@@ -1,6 +1,6 @@
 const request = require('supertest')
-const app = require('../src/index.js')
-const Book = require('../src/models/booksModels.js')
+const app = require('../index.js')
+const Book = require('../models/booksModels.js')
 
 describe('API Routes', () => {
   //Prueba para obtener todos los libros
@@ -14,7 +14,7 @@ describe('API Routes', () => {
     })
   })
 
-  //Crea un libro de prueba para el testo
+  //Crea un libro de prueba para el testeo
   async function createDummyBook() {
     return await Book.create({
       titulo: 'Dummy Book',

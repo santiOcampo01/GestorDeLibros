@@ -160,8 +160,6 @@ const updateBookValidation = [
   body('imagen').notEmpty(),
 ]
 
-
-
 /**
  * @swagger
  * /api/books/update/{id}:

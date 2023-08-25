@@ -40,6 +40,7 @@ export default function EditComponent() {
             if (response.status === 200) {
               setSuccessMessage('Libro editado exitosamente') 
             }
+            getBook()
     } catch (error) {
       console.error('Error al editar el libro:', error)
     }
