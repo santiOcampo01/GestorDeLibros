@@ -14,7 +14,7 @@ Este repositorio contiene el código fuente de una aplicación web que gestiona 
 
 ### Endpoints
 
-- `GET /api/books`: Obtiene la lista de todos los libros en el catálogo.
+- `GET /api/books/`: Obtiene la lista de todos los libros en el catálogo.
 - `GET /api/books/:id`: Obtiene un libro por su ID.
 - `POST /api/books/create`: Agrega un nuevo libro al catálogo.
 - `PUT /api/books/update/:id`: Actualiza un libro existente en el catálogo.
@@ -50,12 +50,18 @@ Este repositorio contiene el código fuente de una aplicación web que gestiona 
 
 - Para ejecutar los test, accede al directorio del backend: `cd backend`
 - Ejecuta el comando: `npm test`
-
+- Se ejecutaran automaticamente los testeo de la api solicitados como lo son 
+- Escribir pruebas para validar que se puedan agregar libros.
+- Escribir pruebas para validar que se puedan editar libros.
+- Escribir pruebas para validar que se puedan eliminar libros.
+- Escribir pruebas para validar que se puedan obtener libros.
+- Escribir pruebas para validar que no se puedan agregar libros sin los campos correspondientes
+- Escribir pruebas para validar que no se puedan agregar libros sin los campos correspondientes
 
 ## Documentacion
 
-Para la documentacion de la api se uso la tecnologia de swagger, para acceder a la documentacion de la api se debe acceder a la siguiente ruta: `http://localhost:8080/api-docs/`
-tambien se puede acceder a la documentacion en forma de json mediante la siguiente ruta: `http://localhost:8080/api-docs-json/`
+Para la documentacion de la api se uso la tecnologia de swagger, para acceder a la documentacion de la api se debe acceder a la siguiente ruta: `http://localhost:8080/api/docs/`
+tambien se puede acceder a la documentacion en forma de json mediante la siguiente ruta: `http://localhost:8080/api/docs.json/`
 
 ## tecnologias
 - React
