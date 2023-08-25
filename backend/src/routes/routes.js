@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const { body, param, validationResult } = require('express-validator')
-const db = require('../database/db')
 const Book = require('../models/booksModels')
 const router = Router()
 
@@ -30,11 +29,66 @@ router.get('/', async (req, res) => { // Ruta para obtener todos los libros
     const getBooks = await Book.findAll({
       attributes: ['id', 'titulo', 'autor', 'fechaLanzamiento', 'genero', 'imagen'], // Especifica las columnas que deseas seleccionar
     })
+
     res.json(getBooks)
+
   } catch (err) {
     res.json({ message: err })
   }
 })
+
+
+/**
+ * @swagger
+ * /api/books/{id}:
+ *   get:
+ *     summary: Obtiene un libro por su ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID del libro a obtener
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *     responses:
+ *       200:
+ *         description: Libro obtenido exitosamente
+ *         content:
+ *           application/json:
+ *             example:
+ *               id: 1
+ *               titulo: "Libro 1"
+ *               autor: "Autor 1"
+ *               año_de_publicación: 2022
+ *               genero: "Género 1"
+ *               imagen: "URL de la imagen"
+ */
+router.get('/:id', async (req, res) => {
+  // Ruta para obtener todos los libros
+  if(!req.params.id) return res.status(400).json({ message: 'No se proporcionó un ID' })
+  else {
+   getId = await Book.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+  if (getId) {
+    try {
+      const getBooks = await Book.findOne({
+        where: {
+          id: req.params.id,
+        },
+        attributes: ['id', 'titulo', 'autor', 'fechaLanzamiento', 'genero', 'imagen'], // Especifica las columnas que deseas seleccionar
+      })
+      res.status(200).json({ message: 'Libro obtenido exitosamente' })
+    } catch (err) {
+      res.json({ message: err })
+    }
+  } else res.status(404).json({ message: 'Libro no encontrado' })
+} 
+})
+
 
 const createBookValidation = [
   body('titulo').notEmpty(),
@@ -43,9 +97,6 @@ const createBookValidation = [
   body('genero').notEmpty(),
   body('imagen').notEmpty(),
 ]
-
-
-
 /**
  * @swagger
  * /api/books/create:
@@ -90,7 +141,6 @@ router.post('/create', createBookValidation, async (req, res) => {
     try {
       const { titulo, autor, fechaLanzamiento, genero, imagen } = req.body
 
-      // Crear un nuevo registro utilizando Sequelize
       const newBook = await Book.create({
         titulo,
         autor,
@@ -167,7 +217,7 @@ router.put('/update/:id', updateBookValidation, async (req, res) => {
       const { id } = req.params
       const { titulo, autor, fechaLanzamiento, genero, imagen } = req.body
 
-      // Verificar si el libro existe antes de intentar actualizar
+
       const existingBook = await Book.findOne({
         where: {
           id: id,
@@ -178,7 +228,6 @@ router.put('/update/:id', updateBookValidation, async (req, res) => {
         return res.status(404).json({ message: 'Libro no encontrado' })
       }
 
-      // Actualizar el libro
       await Book.update(
         {
           titulo,
@@ -194,7 +243,7 @@ router.put('/update/:id', updateBookValidation, async (req, res) => {
         },
         )
 
-      res.json({ message: 'Libro actualizado exitosamente' })
+      res.status(200).json({ message: 'Libro actualizado exitosamente' })
     } catch (err) {
       res.status(500).json({ message: err.message })
     }
@@ -239,7 +288,7 @@ router.delete('/delete/:id', async (req, res) => {
                   return res.status(404).json({ message: 'Libro no encontrado' })
                 }
                 else {
-    // Eliminar un registro
+
     const deleteBook = await Book.destroy({
       where: {
         id: id,

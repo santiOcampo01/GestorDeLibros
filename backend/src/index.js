@@ -1,5 +1,6 @@
 const express = require('express')
 const morgan = require('morgan')
+const cors =  require('cors')
 const db = require('./database/db')
 const swaggerDocs  = require('./routes/swagger')
 const app = express()
@@ -7,14 +8,19 @@ const app = express()
 //middleware
 app.use(morgan('dev'))
 app.use(express.json())
-
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE'
+  }),
+)
 
 
 //routes
 app.use('/api/books', require('./routes/routes.js'))
 
 //starting server
-PORT = process.env.PORT || 3000
+PORT = process.env.PORT || 8080
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
     swaggerDocs(app, PORT)

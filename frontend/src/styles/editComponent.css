@@ -1,0 +1,86 @@
+
+.divEdit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px 0 20px;
+}
+
+ h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+form   {
+  border: 1px solid #ddd;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+form h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+input  {
+  width: 90%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+
+.enviar,
+.volver {
+    width: 45%;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.enviar:hover,
+.volver:hover {
+  background-color: #0056b3;
+     transition: background-color 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+  .divEdit {
+    max-width: 90%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .enviar,
+  .volver {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

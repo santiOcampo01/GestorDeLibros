@@ -1,0 +1,73 @@
+
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center; 
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 0;
+}
+
+li {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 10px;
+}
+
+
+button {
+    width: 45%
+}
+
+.autor,
+.fechalanzamiento,
+.genero {
+  margin: 5px 0;
+  font-style: italic;
+  color: #666;
+}
+
+
+li img {
+  margin: 10px auto;
+  display: block;
+}
+
+.editar,
+.eliminar,
+.añadir,
+.volver {
+  display: inline-block; 
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.editar:hover,
+.eliminar:hover,
+.añadir:hover,
+.volver:hover {
+  background-color: #0056b3;
+}
